@@ -1,284 +1,186 @@
-# Document-Based RAG System using Google Gemini & FAISS
+# Retrieval-Augmented Generation (RAG) Experiments using Google Gemini
 
-A Retrieval-Augmented Generation (RAG) system built in Google Colab that enhances Large Language Model (LLM) responses using an external knowledge base.
+This repository demonstrates the implementation of **Retrieval-Augmented Generation (RAG)** using entirely **free and open tools**. It contains two progressively advanced experiments that showcase how external knowledge sources can enhance the responses of Large Language Models (LLMs).
 
-This project demonstrates how an LLM can generate more accurate and context-aware responses by retrieving relevant information from a document before answering a user's query.
-
-> **Note:** The original lab used IBM Granite via Replicate. In this implementation, the paid Replicate API has been replaced with Google's free Gemini API while preserving the complete RAG workflow.
+The original IBM SkillsBuild labs used **IBM Granite via Replicate** for response generation. Since Replicate requires API credits, these experiments have been adapted to use **Google Gemini 2.5 Flash (Free API)** while preserving the complete RAG workflow.
 
 ---
 
-# Objective
-
-The objective of this project is to demonstrate the implementation of a document-based Retrieval-Augmented Generation (RAG) pipeline.
-
-The system:
-
-- Accepts a user query
-- Retrieves relevant information from an external knowledge base
-- Uses the retrieved information as context
-- Generates a context-aware response using Google Gemini
-- Compares responses with and without RAG
-
----
-
-# Project Workflow
+# Repository Structure
 
 ```
-                 User Query
-                      │
-                      ▼
-         Baseline Response (Gemini)
-                      │
-                      ▼
-        Upload Knowledge Base (.txt)
-                      │
-                      ▼
-            Split into Chunks
-                      │
-                      ▼
-      Sentence Transformer Embeddings
-                      │
-                      ▼
-              FAISS Vector Store
-                      │
-                      ▼
-        Retrieve Relevant Chunks
-                      │
-                      ▼
-      Context + User Query → Gemini
-                      │
-                      ▼
-          RAG-Enhanced Response
+📦 RAG-Experiments
+│
+├── 📄 README.md
+├── 📓 RAG.ipynb
+├── 📓 Dynamic_RAG_Web_Crawling_Gemini.ipynb
+└── 📄 External_KB_for_RAG.txt
 ```
 
 ---
 
-# Features
+# Experiments Included
 
-- Baseline LLM response (without RAG)
-- Document chunking
-- Semantic embeddings using Sentence Transformers
-- FAISS vector similarity search
-- Retrieval of relevant document chunks
-- Context-aware response generation using Gemini
-- Side-by-side comparison of baseline and RAG responses
+## Experiment 1 — Document-Based Retrieval-Augmented Generation
 
----
+### Objective
 
-# Technologies Used
+Implement a basic RAG pipeline using a static external knowledge base.
 
-| Technology | Purpose |
-|------------|---------|
-| Python | Programming Language |
-| Google Colab | Development Environment |
-| Google Gemini 2.5 Flash | Large Language Model |
-| Sentence Transformers | Generate text embeddings |
-| FAISS | Vector database for similarity search |
-| NumPy | Numerical computations |
-
----
-
-# Project Structure
+### Workflow
 
 ```
-.
-├── README.md
-├── External_KB_for_RAG.txt
-└── RAG_Experiment.ipynb
+External Knowledge Base
+        │
+        ▼
+Document Chunking
+        │
+        ▼
+Sentence Transformer Embeddings
+        │
+        ▼
+FAISS Vector Database
+        │
+        ▼
+Semantic Retrieval
+        │
+        ▼
+Google Gemini
+        │
+        ▼
+Context-Aware Response
 ```
 
+### Features
+
+- Static document knowledge base
+- Text chunking
+- Sentence embeddings
+- FAISS similarity search
+- Retrieval-Augmented Generation
+- Baseline vs RAG comparison
+
+### Files
+
+- `RAG.ipynb`
+- `External_KB_for_RAG.txt`
+
 ---
 
-# Installation
+## Experiment 2 — Dynamic Knowledge-Augmented RAG using Web Crawling
 
-Install the required libraries:
+### Objective
 
-```bash
-pip install sentence-transformers faiss-cpu google-generativeai
-```
+Enhance the RAG system by replacing the static knowledge base with dynamically retrieved web content.
 
----
+Instead of answering only from a local document, the system first crawls a live website, extracts its textual content, builds a vector database, retrieves relevant information, and then generates a response using Gemini.
 
-# Setup
-
-## Step 1
-
-Create a Google AI Studio API key.
-
-## Step 2
-
-Open Google Colab.
-
-## Step 3
-
-Store your API key in Colab Secrets.
-
-Secret Name:
+### Workflow
 
 ```
-GOOGLE_API_KEY
+Website
+   │
+   ▼
+Web Crawling
+   │
+   ▼
+Extract Visible Text
+   │
+   ▼
+Chunking
+   │
+   ▼
+Sentence Transformer Embeddings
+   │
+   ▼
+FAISS Vector Database
+   │
+   ▼
+Semantic Retrieval
+   │
+   ▼
+Google Gemini
+   │
+   ▼
+Dynamic Context-Aware Response
 ```
 
----
+### Features
 
-# Running the Notebook
+- Live web crawling
+- Dynamic knowledge source
+- Automatic text extraction
+- Semantic indexing
+- Context-aware response generation
+- Baseline vs Dynamic RAG comparison
 
-Execute the notebook cells in the following order:
+### Files
 
-1. Install libraries
-2. Import libraries
-3. Load Gemini API
-4. Generate baseline response
-5. Upload knowledge base
-6. Split document into chunks
-7. Generate embeddings
-8. Create FAISS index
-9. Retrieve relevant chunks
-10. Generate RAG response
-11. Compare results
+- `Dynamic_RAG_Web_Crawling_Gemini.ipynb`
 
 ---
 
-# How the RAG Pipeline Works
+# Technology Stack
 
-### 1. User enters a query
-
-Example:
-
-```
-Do I need a Schengen visa if I travel to France?
-```
-
----
-
-### 2. Baseline LLM Response
-
-The query is directly sent to Gemini.
-
-The response relies only on the model's pre-trained knowledge.
+| Component | Technology |
+|-----------|------------|
+| Language | Python |
+| Development Environment | Google Colab |
+| LLM | Google Gemini 2.5 Flash |
+| Embedding Model | all-MiniLM-L6-v2 |
+| Vector Database | FAISS |
+| Web Crawling | Requests + BeautifulSoup |
+| Numerical Computing | NumPy |
 
 ---
 
-### 3. Knowledge Base Upload
+# Comparison of Experiments
 
-The external document is uploaded into Google Colab.
-
----
-
-### 4. Document Chunking
-
-The document is divided into smaller overlapping chunks to improve retrieval accuracy.
-
----
-
-### 5. Embedding Generation
-
-Each chunk is converted into a high-dimensional vector using the **all-MiniLM-L6-v2** Sentence Transformer model.
-
----
-
-### 6. FAISS Index Creation
-
-The embeddings are stored inside a FAISS vector index for efficient similarity search.
-
----
-
-### 7. Query Embedding
-
-The user query is converted into an embedding using the same embedding model.
-
----
-
-### 8. Semantic Retrieval
-
-FAISS searches for the document chunks most similar to the user's query.
-
----
-
-### 9. Context Augmentation
-
-The retrieved chunks are combined into a context prompt.
-
----
-
-### 10. Response Generation
-
-Gemini receives:
-
-- Retrieved Context
-- User Question
-
-It generates an answer using the retrieved information.
-
----
-
-# Example
-
-### User Question
-
-```
-Hi. I'm a citizen of Romania.
-Do I need a Schengen visa if I travel to France?
-```
-
-### Without RAG
-
-```
-The response is generated using the LLM's built-in knowledge.
-```
-
-### With RAG
-
-```
-The response is generated using the retrieved travel policy document, making it more accurate and context-aware.
-```
-
----
-
-# Advantages of RAG
-
-- Reduces hallucinations
-- Provides up-to-date information
-- Uses external knowledge without retraining the LLM
-- Produces more reliable responses
-- Easily scalable with additional documents
-
----
-
-# Future Improvements
-
-- Support PDF and DOCX documents
-- Use LangChain for pipeline orchestration
-- Implement Hybrid Search
-- Add metadata filtering
-- Build a Streamlit web interface
-- Store vectors in Pinecone, ChromaDB, or Milvus
-- Support multi-document retrieval
+| Feature | Experiment 1 | Experiment 2 |
+|---------|--------------|--------------|
+| Knowledge Source | Static Text File | Live Website |
+| Data Collection | Manual Upload | Web Crawling |
+| Chunking | ✓ | ✓ |
+| Embeddings | ✓ | ✓ |
+| FAISS Retrieval | ✓ | ✓ |
+| Gemini Response | ✓ | ✓ |
+| Dynamic Updates | ✗ | ✓ |
 
 ---
 
 # Learning Outcomes
 
-After completing this project, you will understand:
+These experiments demonstrate the complete Retrieval-Augmented Generation pipeline, including:
 
-- Retrieval-Augmented Generation (RAG)
-- Document chunking
-- Text embeddings
-- Semantic search
-- Vector databases
+- Document preprocessing
+- Web crawling
+- Text chunking
+- Semantic embeddings
+- Vector similarity search
 - FAISS indexing
-- Prompt engineering
+- Context retrieval
+- Prompt augmentation
 - Context-aware response generation
+- Static vs Dynamic knowledge integration
 
 ---
 
-# References
+# Why Google Gemini?
 
-- Google Gemini API
-- Sentence Transformers
-- FAISS
-- Google Colab
+The original IBM SkillsBuild labs used **IBM Granite through Replicate** for text generation. This repository replaces Replicate with **Google Gemini 2.5 Flash**, enabling the experiments to be executed entirely with free tools while maintaining the same RAG architecture and learning objectives.
+
+---
+
+# Future Enhancements
+
+- Multi-document RAG
+- Hybrid Search (Keyword + Semantic)
+- ChromaDB / Pinecone Integration
+- PDF and DOCX support
+- LangChain Integration
+- Streamlit-based User Interface
+- Conversational Memory
+- Multi-source Retrieval
 
 ---
 
@@ -288,4 +190,4 @@ After completing this project, you will understand:
 
 B.E. Computer Science Engineering
 
-Project: Document-Based Retrieval-Augmented Generation (RAG) System
+This repository was created as part of hands-on learning in Retrieval-Augmented Generation (RAG), demonstrating both static and dynamic knowledge integration using modern open-source tools and Google Gemini.

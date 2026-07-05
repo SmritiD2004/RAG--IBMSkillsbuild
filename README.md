@@ -188,6 +188,4 @@ The original IBM SkillsBuild labs used **IBM Granite through Replicate** for tex
 
 **Smriti Dawane**
 
-B.E. Computer Science Engineering
-
 This repository was created as part of hands-on learning in Retrieval-Augmented Generation (RAG), demonstrating both static and dynamic knowledge integration using modern open-source tools and Google Gemini.
